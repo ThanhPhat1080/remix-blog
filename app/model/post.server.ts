@@ -1,19 +1,15 @@
-import type { User, Post } from "@prisma/client";
+import type { User, Post } from '@prisma/client';
 
-import { prisma } from "~/server/db.server";
-import {
-  convertUrlSlug,
-  isEmptyOrNotExist,
-  removeEmptyObjectProperties,
-} from "~/utils";
+import { prisma } from '~/server/db.server';
+import { convertUrlSlug, isEmptyOrNotExist, removeEmptyObjectProperties } from '~/utils';
 
-export type { Post } from "@prisma/client";
+export type { Post } from '@prisma/client';
 
 export function getPost({
   id,
   userId,
-}: Pick<Post, "id"> & {
-  userId: User["id"];
+}: Pick<Post, 'id'> & {
+  userId: User['id'];
 }) {
   return prisma.post.findFirst({
     where: { id, userId },
@@ -29,13 +25,7 @@ export function getPostBySlug(slug: string, userId?: string) {
   });
 }
 
-export function getPostListItems({
-  userId,
-  query,
-}: {
-  userId: User["id"];
-  query?: string;
-}) {
+export function getPostListItems({ userId, query }: { userId: User['id']; query?: string }) {
   const whereQuery = isEmptyOrNotExist(query)
     ? { userId }
     : {
@@ -49,7 +39,7 @@ export function getPostListItems({
 
   return prisma.post.findMany({
     where: whereQuery,
-    orderBy: { updatedAt: "desc" },
+    orderBy: { updatedAt: 'desc' },
   });
 }
 
@@ -57,7 +47,7 @@ export function getPublishPosts(option?: object) {
   return prisma.post.findMany({
     where: { isPublish: true, ...option },
     include: { user: true },
-    orderBy: { updatedAt: "desc" },
+    orderBy: { updatedAt: 'desc' },
   });
 }
 
@@ -69,11 +59,8 @@ export function createPost({
   isPublish = false,
   userId,
   coverImage,
-}: Pick<
-  Post,
-  "body" | "title" | "preface" | "isPublish" | "slug" | "coverImage"
-> & {
-  userId: User["id"];
+}: Pick<Post, 'body' | 'title' | 'preface' | 'isPublish' | 'slug' | 'coverImage'> & {
+  userId: User['id'];
 }) {
   return prisma.post.create({
     data: {
@@ -100,10 +87,7 @@ export function updatePost({
   slug,
   isPublish = false,
   coverImage = null,
-}: Pick<
-  Post,
-  "id" | "title" | "preface" | "body" | "slug" | "isPublish" | "coverImage"
->) {
+}: Pick<Post, 'id' | 'title' | 'preface' | 'body' | 'slug' | 'isPublish' | 'coverImage'>) {
   return prisma.post.update({
     where: {
       id,
@@ -119,10 +103,7 @@ export function updatePost({
   });
 }
 
-export function deletePostBySlug({
-  slug,
-  userId,
-}: Pick<Post, "slug"> & { userId: User["id"] }) {
+export function deletePostBySlug({ slug, userId }: Pick<Post, 'slug'> & { userId: User['id'] }) {
   return prisma.post.deleteMany({
     where: { slug, userId },
   });

@@ -40,12 +40,7 @@ export function useMatchesData(id: string): Record<string, unknown> | undefined 
 }
 
 function isUser(user: any): user is User {
-  return (
-    user !== null &&
-    typeof user === 'object' &&
-    isEmptyOrNotExist(user.email) &&
-    typeof user.email === 'string'
-  );
+  return user !== null && typeof user === 'object' && isEmptyOrNotExist(user.email) && typeof user.email === 'string';
 }
 
 export function useOptionalUser(): User | undefined {

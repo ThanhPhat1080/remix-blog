@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from 'react';
 
 type PropTypes = {
   innerRef: React.Ref<HTMLTextAreaElement>;
@@ -12,17 +12,17 @@ type PropTypes = {
 };
 
 const themeTextarea = {
-  light: { background: "white", color: "black" },
-  dark: { background: "#1f2a3a", color: "#cbd5e1" },
-  system: {}
+  light: { background: 'white', color: 'black' },
+  dark: { background: '#1f2a3a', color: '#cbd5e1' },
+  system: {},
 };
 
 export const TextareaEditorSimple = ({
   innerRef,
   name,
-  customClasses = "",
+  customClasses = '',
   isError = false,
-  defaultValue = "",
+  defaultValue = '',
   spaces = 4,
   onChange,
   isRequired = false,
@@ -36,11 +36,11 @@ export const TextareaEditorSimple = ({
     fontSize: string;
     theme: keyof typeof themeTextarea;
   }>({
-    fontSize: "1",
-    theme: "system",
+    fontSize: '1',
+    theme: 'system',
   });
   const baseClasses =
-    "w-full flex-1 rounded-md border-2 border-gray-100 bg-white py-2 px-3 leading-6 text-slate-700 font-semibold focus:bg-white dark:bg-slate-800 dark:text-slate-300 focus:dark:bg-slate-800";
+    'w-full flex-1 rounded-md border-2 border-gray-100 bg-white py-2 px-3 leading-6 text-slate-700 font-semibold focus:bg-white dark:bg-slate-800 dark:text-slate-300 focus:dark:bg-slate-800';
   const classes = `${baseClasses} ${customClasses}`;
 
   useEffect(() => {
@@ -58,12 +58,10 @@ export const TextareaEditorSimple = ({
     const content = e.currentTarget.value;
     const caret = e.currentTarget.selectionStart;
 
-    if (e.key === "Tab") {
+    if (e.key === 'Tab') {
       e.preventDefault();
 
-      const newText = `${content.substring(0, caret)}${" ".repeat(
-        spaces
-      )}${content.substring(caret)}`;
+      const newText = `${content.substring(0, caret)}${' '.repeat(spaces)}${content.substring(caret)}`;
       setText({ value: newText, caret: caret, target: e.currentTarget });
     }
   };
@@ -73,16 +71,15 @@ export const TextareaEditorSimple = ({
       <div className="relative my-2 flex justify-end px-1">
         <div className="flex items-center gap-2">
           <select
-            onChange={(e) =>
+            onChange={e =>
               // @ts-ignore
-              setCustomStyles((prev) => ({
+              setCustomStyles(prev => ({
                 ...prev,
                 theme: e.target.value,
               }))
             }
             className="bg-black text-white"
-            value={customStyles.theme}
-          >
+            value={customStyles.theme}>
             <option value="system">System</option>
             <option value="dark">Dark</option>
             <option value="light">Light</option>
@@ -90,18 +87,17 @@ export const TextareaEditorSimple = ({
         </div>
         <div
           style={{
-            position: "absolute",
-            top: "0",
-            right: "150px",
-            width: "120px",
-            display: "flex",
+            position: 'absolute',
+            top: '0',
+            right: '150px',
+            width: '120px',
+            display: 'flex',
             gap: 2,
-          }}
-        >
+          }}>
           <input
             type="range"
-            onChange={(e) =>
-              setCustomStyles((prev) => ({
+            onChange={e =>
+              setCustomStyles(prev => ({
                 ...prev,
                 fontSize: e.target.value,
               }))
@@ -121,7 +117,7 @@ export const TextareaEditorSimple = ({
         rows={15}
         className={classes}
         aria-invalid={isError ? true : undefined}
-        aria-errormessage={isError ? "text-area-editor-error" : undefined}
+        aria-errormessage={isError ? 'text-area-editor-error' : undefined}
         onChange={handleChange}
         onKeyDown={handleTab}
         required={isRequired}
