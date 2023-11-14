@@ -2,6 +2,7 @@ import { memo } from 'react';
 import type { Post, User } from '@prisma/client';
 import { Link } from '@remix-run/react';
 import CloudinaryImageLoader from './CloudinaryImageLoader';
+import ROUTERS from '~/constants/routers';
 
 export const PostArticle = (
   props: Partial<Post> & {
@@ -13,9 +14,9 @@ export const PostArticle = (
 
   const updateAtString = new Date(updatedAt).toJSON().slice(0, 10).replace(/-/g, '/');
 
-  const linkToPostContent = `${linkToPrefix || ''}/${slug}`;
+  const linkToPostContent = `${ROUTERS.BLOG}${linkToPrefix || ''}/${slug}`;
   return (
-    <article className="flex flex-col gap-3 transition duration-700 ease-in-out hover:-translate-y-5">
+    <article className="flex flex-col gap-3 transition duration-300 ease-in-out hover:-translate-y-5">
       <Link to={linkToPostContent} prefetch="intent">
         <div className="h-56 overflow-hidden rounded-lg shadow-md md:h-72 lg:h-96">
           <CloudinaryImageLoader

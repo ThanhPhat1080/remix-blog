@@ -1,5 +1,6 @@
 export enum ROUTERS {
   ROOT = '/',
+  BLOG = '/blog',
   ABOUT_ME = '/about-me',
   DASHBOARD = '/dashboard',
   POST_EDITOR = '/post-editor',
