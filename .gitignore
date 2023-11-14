@@ -26,3 +26,5 @@ api/index.js.map
 /cypress/videos
 /coverage
 api/
+
+.vercel

@@ -1,6 +1,7 @@
 /* eslint-disable no-lone-blocks */
 import type { User } from '@prisma/client';
 import { useOutletContext } from '@remix-run/react';
+import { CloudinaryImageLoader } from '~/components/CloudinaryImageLoader';
 import { isEmptyOrNotExist } from '~/utils';
 
 export default function Profile() {
@@ -10,12 +11,20 @@ export default function Profile() {
     <div className="border-r-1 mx-auto my-10 flex flex-col border-gray-500 pr-3  sm:w-full md:w-1/2 lg:w-1/3">
       <div className="flex h-full w-full flex-col gap-4">
         <div className="mx-auto my-2">
-          <img
-            src="/assets/images/robot-cute-avatar.png"
-            width={100}
-            height={100}
-            alt="My avatar"
-            className="mx-auto rounded-full"
+          <CloudinaryImageLoader
+            className="h-60 w-60 rounded-full"
+            src={user.avatar || ''}
+            height="240"
+            width="240"
+            alt={user.name + '-avatar'}
+            responsive={[
+              {
+                size: {
+                  width: 200,
+                },
+                maxWidth: 800,
+              },
+            ]}
           />
         </div>
         <strong className="my-2 text-center text-2xl text-sky-600">{user.name}</strong>
@@ -61,23 +70,4 @@ export default function Profile() {
       </div>
     </div>
   );
-}
-
-// import { CloudinaryImageLoader } from "~/components";
-{
-  /* <CloudinaryImageLoader
-          className="h-60 w-60 rounded-full"
-          src={user.avatar || ""}
-          height="240"
-          width="240"
-          alt={user.name + "-avatar"}
-          responsive={[
-            {
-              size: {
-                width: 200,
-              },
-              maxWidth: 800,
-            },
-          ]}
-        /> */
 }

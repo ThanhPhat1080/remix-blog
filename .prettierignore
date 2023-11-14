@@ -12,6 +12,7 @@
 /api/index.js.map
 /app/tailwind.css
 api/index.js.map
+/app/styles/**.min.css
 
 /coverage
 api/

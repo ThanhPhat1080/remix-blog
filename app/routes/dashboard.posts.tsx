@@ -17,6 +17,7 @@ import { PostCard } from '~/components';
 import type { Post } from '@prisma/client';
 import { useState } from 'react';
 import { isEmptyOrNotExist } from '~/utils';
+import ROUTERS from '~/constants/routers';
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const userId = await requireUserId(request);
@@ -139,7 +140,7 @@ export default function PostPage() {
           style={{ width: 'inherit' }}>
           <Link
             title="Create new post"
-            to="./../formEditor-test"
+            to={ROUTERS.POST_EDITOR}
             className="m-auto inline-flex w-full items-center justify-center rounded-md bg-green-500 p-2 text-center text-xl text-white duration-300 ease-in-out hover:scale-105 hover:bg-green-600 focus:scale-110 focus:outline-none focus:ring-green-800 active:scale-100 active:bg-green-800">
             <svg
               xmlns="http://www.w3.org/2000/svg"
