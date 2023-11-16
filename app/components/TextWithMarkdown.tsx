@@ -1,10 +1,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import marked from 'marked';
-
 import markDownBody from '~/styles/mark-down-body.min.css';
 import lineWavy from '~/styles/line-wavy.css';
 import atomOneDark from '~/styles/atom-one-dark.min.css';
-import sanitizeHtml from 'sanitize-html';
 
 // @ts-ignore
 import customHeadingId from 'marked-custom-heading-id';
@@ -17,16 +15,8 @@ export const links: LinksFunction = () => {
       rel: 'stylesheet',
       href: 'https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.1.0/github-markdown-dark.min.css',
       crossOrigin: 'anonymous',
-      referrerPolicy: 'no-referrer',
-      media: '(prefers-color-scheme: dark)',
     },
-    {
-      rel: 'stylesheet',
-      href: 'https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.1.0/github-markdown-light.min.css',
-      crossOrigin: 'anonymous',
-      referrerPolicy: 'no-referrer',
-      media: '(prefers-color-scheme: light)',
-    },
+
     {
       rel: 'stylesheet',
       href: markDownBody,
@@ -42,9 +32,9 @@ export const links: LinksFunction = () => {
   ];
 };
 
-// @ts-ignore
 marked.setOptions({
-  highlight: function (code: any, lang: any) {
+  // @ts-ignore
+  highlight: function (code, lang) {
     const hljs = require('highlight.js/lib/common');
     const language = hljs.getLanguage(lang) ? lang : 'plaintext';
 
@@ -53,8 +43,6 @@ marked.setOptions({
   langPrefix: 'hljs language-',
   headerPrefix: 'section-',
 });
-
-// @ts-ignore
 marked.use(customHeadingId());
 
 export default function TextWithMarkdown({
@@ -71,12 +59,9 @@ export default function TextWithMarkdown({
       className={`markdown-body w-full ${customClasses}`}
       style={style}
       dangerouslySetInnerHTML={{
-        // @ts-ignore
-        __html: marked.parse(
-          sanitizeHtml(text, {
-            allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img', 'div', 'pre', 'code', 'span', 'blockquote']),
-          }),
-        ),
+        __html: marked.parse(text, {
+          sanitize: true,
+        }),
       }}
     />
   );

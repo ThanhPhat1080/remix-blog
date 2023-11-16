@@ -43,6 +43,7 @@
     "isbot": "^3.6.1",
     "marked": "^1.2.5",
     "marked-custom-heading-id": "^2.0.5",
+    "marked-sanitizer-github": "^1.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "remix-image": "^1.4.0",

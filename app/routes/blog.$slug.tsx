@@ -87,7 +87,7 @@ export default function PostArticleContentDetail() {
 
   return (
     <div className="relative">
-      <div className="relative pt-10 lg:pt-40">
+      <div className="relative pt-10 lg:pt-28">
         <div className="mx-auto mb-5 flex w-full max-w-3xl flex-col px-5 sm:max-w-2xl md:max-w-3xl lg:px-0">
           {data.post ? (
             <section className="pb-8">
