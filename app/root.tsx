@@ -103,7 +103,7 @@ export default function App() {
             </nav>
           </div>
         </header>
-        <section className="bg-wave absolute top-0 min-h-[700px] w-full">
+        <section className="bg-wave absolute top-[-100px] lg:top-0 min-h-[700px] w-full">
           <div className="absolute bottom-[600px] left-0 w-full before:absolute before:bottom-[-580px] before:h-[590px] before:w-full before:bg-sky-300">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
               <path

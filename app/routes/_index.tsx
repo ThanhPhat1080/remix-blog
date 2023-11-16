@@ -1,8 +1,7 @@
 import type { LinksFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
-import { Link, NavLink, Outlet, useLoaderData } from '@remix-run/react';
+import { useLoaderData } from '@remix-run/react';
 import { PostArticle } from '~/components/PostArticle';
-import ROUTERS from '~/constants/routers';
 import { getPublishPosts } from '~/model/post.server';
 
 import lineWavy from '~/styles/line-wavy.css';

@@ -14,8 +14,8 @@ export const PostArticleContent = (props: Partial<Post> & { author: Pick<User, '
 
   return (
     <article aria-details={title} aria-label={title} className="w-full">
-      <div className="my-8">
-        <h1 className="text-3xl font-bold text-sky-700 dark:text-sky-400 lg:text-4xl 2xl:text-4xl">{title}</h1>
+      <div className="my-8 text-stale-800">
+        <h1 className="font-bold lg:text-6xl text-4xl">{title}</h1>
         <div className="my-8" />
         <div className="text-md flex gap-3">
           <div className="relative h-12 w-12 border-spacing-3 overflow-hidden rounded-full border-2 border-sky-500 dark:border-slate-500">
@@ -35,15 +35,10 @@ export const PostArticleContent = (props: Partial<Post> & { author: Pick<User, '
               ]}
             />
           </div>
-          <div className="dark:text-slate-300">
+          <div>
             <p className="font-semibold">{author.name}</p>
-            <em className="font-thin dark:text-gray-400">{updateAtString}</em>
+            <em className="font-thin">{updateAtString}</em>
           </div>
-        </div>
-        <div className="my-8 border-l-4 border-slate-500 pl-4">
-          <blockquote aria-details={preface} className="px-3 text-xl italic dark:text-gray-300">
-            {preface}
-          </blockquote>
         </div>
       </div>
 
@@ -65,11 +60,15 @@ export const PostArticleContent = (props: Partial<Post> & { author: Pick<User, '
           className="h-full w-full object-cover"
         />
       </div>
-
+      <div className="my-8 border-l-4 text-gray-400 border-slate-500 pl-4">
+          <blockquote aria-details={preface} className="px-3 text-lg italic">
+            {preface}
+          </blockquote>
+        </div>
       <hr className="line-wavy" />
 
       <div className="py-6">
-        <TextWithMarkdown text={body} style={{ background: 'inherit', fontSize: '1.5em' }} />
+        <TextWithMarkdown text={body} style={{ background: 'inherit', fontSize: '1em' }} />
       </div>
     </article>
   );

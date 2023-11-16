@@ -72,7 +72,7 @@ export default function NoteDetailsPage() {
           {post.isPublish ? (
             <div>
               <strong className="mr-2 rounded-xl border-2 border-green-500 px-3 text-green-500">Published</strong>
-              <Link to={`/${post.slug}`} className="text-lg text-sky-500 hover:underline" prefetch="intent">
+              <Link to={`${ROUTERS.BLOG}/${post.slug}`} className="text-lg text-sky-500 hover:underline" prefetch="intent">
                 <strong>Go to post</strong>
               </Link>
             </div>

@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-import { marked } from 'marked';
+import {marked} from 'marked';
 
 import markDownBody from '~/styles/mark-down-body.min.css';
 import lineWavy from '~/styles/line-wavy.css';
