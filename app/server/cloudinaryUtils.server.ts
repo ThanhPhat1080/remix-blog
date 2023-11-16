@@ -1,12 +1,12 @@
 /* eslint-disable no-async-promise-executor */
-import type { UploadHandler } from "@remix-run/node";
+import type { UploadHandler } from '@remix-run/node';
 import {
   writeAsyncIterableToWritable,
   unstable_composeUploadHandlers as composeUploadHandlers,
   unstable_createMemoryUploadHandler as createMemoryUploadHandler,
-} from "@remix-run/node";
-import { v2 as cloudinary } from "cloudinary";
-import { getPathImgCloudinary } from "~/utils";
+} from '@remix-run/node';
+import { v2 as cloudinary } from 'cloudinary';
+import { getPathImgCloudinary } from '~/utils';
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_NAME,
@@ -14,13 +14,11 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-export function cloudinaryUploadImage(
-  data: AsyncIterable<Uint8Array>
-): Promise<unknown> {
+export function cloudinaryUploadImage(data: AsyncIterable<Uint8Array>): Promise<unknown> {
   const uploadPromise = new Promise(async (resolve, reject) => {
     const uploadStream = cloudinary.uploader.upload_stream(
       {
-        folder: "remix",
+        folder: 'remix',
       },
       (error, result) => {
         if (error) {
@@ -28,7 +26,7 @@ export function cloudinaryUploadImage(
           return;
         }
         resolve(result);
-      }
+      },
     );
     await writeAsyncIterableToWritable(data, uploadStream);
   });
@@ -36,9 +34,7 @@ export function cloudinaryUploadImage(
   return uploadPromise;
 }
 
-export const uploadImageHandler: (fileInputName: string) => UploadHandler = (
-  fileInputName
-) =>
+export const uploadImageHandler: (fileInputName: string) => UploadHandler = fileInputName =>
   composeUploadHandlers(
     async ({ name, data }) => {
       try {
@@ -50,9 +46,9 @@ export const uploadImageHandler: (fileInputName: string) => UploadHandler = (
         //@ts-ignore
         return getPathImgCloudinary(uploadedImage);
       } catch (e) {
-        return "";
+        return '';
       }
     },
 
-    createMemoryUploadHandler()
+    createMemoryUploadHandler(),
   );

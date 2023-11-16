@@ -34,25 +34,27 @@ export const meta = ({ data, location }) => {
 
   const OGImage = `https://vercel-og-nextjs-indol-iota.vercel.app/api/param?title=${titleInOG}&author=${authorInOG}&avatar=${avatarInOG}`;
 
-  return [{
-    title,
-    description: description || title || '',
-    keywords: 'technical blog,Remix indie,' + title,
+  return [
+    {
+      title,
+      description: description || title || '',
+      keywords: 'technical blog,Remix indie,' + title,
 
-    'twitter:title': title,
-    'twitter:description': description,
-    'twitter:image': OGImage,
+      'twitter:title': title,
+      'twitter:description': description,
+      'twitter:image': OGImage,
 
-    'og:url': location,
-    'og:title': title,
-    'og:description': description,
-    'og:image': OGImage,
-    'og:image:url': OGImage,
-    'og:image:type': 'png/jpg/jpeg',
-    'og:image:alt': title,
-    'og:image:width': '1200',
-    'og:image:height': '630',
-  }];
+      'og:url': location,
+      'og:title': title,
+      'og:description': description,
+      'og:image': OGImage,
+      'og:image:url': OGImage,
+      'og:image:type': 'png/jpg/jpeg',
+      'og:image:alt': title,
+      'og:image:width': '1200',
+      'og:image:height': '630',
+    },
+  ];
 };
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
@@ -85,7 +87,7 @@ export default function PostArticleContentDetail() {
 
   return (
     <div className="relative">
-      <div className="relative lg:pt-40 pt-10">
+      <div className="relative pt-10 lg:pt-40">
         <div className="mx-auto mb-5 flex w-full max-w-3xl flex-col px-5 sm:max-w-2xl md:max-w-3xl lg:px-0">
           {data.post ? (
             <section className="pb-8">
