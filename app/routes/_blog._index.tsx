@@ -21,7 +21,7 @@ export default function BlogIndex() {
 
   return (
     <>
-      <section className="2xlg:max-w-7xl relative z-10 mx-auto flex w-full pb-[150px] pt-[50px] text-slate-800 sm:flex-row sm:px-4 md:max-w-3xl md:px-0 lg:max-w-5xl">
+      <section className="px-4 2xlg:max-w-7xl relative z-10 mx-auto flex w-full sm:pb-[50px] pb-[80px] pt-[50px] text-slate-800 sm:flex-row sm:px-4 md:max-w-3xl md:px-0 lg:max-w-5xl">
         <div className="flex-3">
           <h1 className="my-4 text-5xl font-semibold lg:text-7xl">
             Hi, I am
@@ -33,7 +33,7 @@ export default function BlogIndex() {
             Welcome to the <em className="text-sky-500 underline decoration-wavy">"rabbit hole"!!!</em>
           </h1>
         </div>
-        <div className="flex-1">
+        <div className="flex-1 hidden sm:block">
           <img src="assets/images/robot-cute.webp" alt="robot-cute-Ouch" width={256} height={311} />
         </div>
       </section>

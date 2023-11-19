@@ -1,18 +1,16 @@
 // import { Partytown } from "@builder.io/partytown/react";
 import type { LinksFunction, LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
-import { Link, Links, Meta, NavLink, Outlet, Scripts, ScrollRestoration, useMatches } from '@remix-run/react';
+import { Links, Meta, Outlet, Scripts, ScrollRestoration, useMatches } from '@remix-run/react';
 
 import tailwindStylesheetUrl from './styles/tailwind.css';
 import globalStyles from './styles/globals.css';
 import { getUser } from './server/session.server';
-import ROUTERS from './constants/routers';
 
 export const links: LinksFunction = () => {
-  return [
-    { rel: 'stylesheet', href: tailwindStylesheetUrl },
-    { rel: 'stylesheet', href: globalStyles },
-  ];
+  return process.env.NODE_ENV === 'development'
+    ? [{ rel: 'stylesheet', href: tailwindStylesheetUrl }]
+    : [{ rel: 'stylesheet', href: globalStyles }];
 };
 
 export const meta: MetaFunction = ({ location }) => [

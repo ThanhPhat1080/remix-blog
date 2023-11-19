@@ -1,7 +1,7 @@
 import type { LinksFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
-import { Link, NavLink, Outlet, useLoaderData } from '@remix-run/react';
-import { PostArticle } from '~/components/PostArticle';
+import { Link, NavLink, Outlet } from '@remix-run/react';
+
 import ROUTERS from '~/constants/routers';
 import { getPublishPosts } from '~/model/post.server';
 
@@ -18,8 +18,6 @@ export async function loader() {
 }
 
 export default function BlogIndex() {
-  const { postArticles } = useLoaderData<typeof loader>();
-
   return (
     <>
       <header className="relative z-10 px-4 py-4 text-lg sm:px-3 md:px-0">
@@ -46,7 +44,7 @@ export default function BlogIndex() {
           </nav>
         </div>
       </header>
-      <section className="bg-wave absolute top-[-100px] min-h-[700px] w-full lg:top-0">
+      <section className="wave-background-animation bg-wave absolute top-[-100px] min-h-[700px] w-full lg:top-0">
         <div className="absolute bottom-[600px] left-0 w-full before:absolute before:bottom-[-580px] before:h-[590px] before:w-full before:bg-sky-300">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
             <path
