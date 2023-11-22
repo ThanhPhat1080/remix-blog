@@ -45,6 +45,26 @@ marked.setOptions({
 });
 marked.use(customHeadingId());
 
+const renderer = {
+  heading(text:string, level:string) {
+    const escapedText = text.toLowerCase().substring(
+      text.indexOf('="') + 2, 
+      text.lastIndexOf('">')
+  );
+console.log('escapedText', {text, escapedText});
+
+    return `
+    </section>
+    <section id="${escapedText.replace("#", '')}">
+            <h${level}>
+              ${text}
+            </h${level}>`;
+
+  }
+};
+
+marked.use({ renderer });
+
 export default function TextWithMarkdown({
   text = '',
   customClasses = '',

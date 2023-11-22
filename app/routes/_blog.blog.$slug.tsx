@@ -8,11 +8,13 @@ import { PostArticleContent, links as PostArticleContentLinks } from '~/componen
 import { PostArticle } from '~/components';
 
 import type { LinksFunction, LoaderFunctionArgs } from '@remix-run/node';
-import { capitalizeFirstLetter, convertUrlSlug } from '~/utils';
+import { capitalizeFirstLetter, convertUrlSlug, isEmptyOrNotExist } from '~/utils';
+import { useEffect, useRef } from 'react';
 
 export const links: LinksFunction = () => {
   return [...PostArticleContentLinks()];
 };
+export const handle = { hydrate: true };
 
 export const meta = ({ data, location }) => {
   if (!data) {
@@ -85,24 +87,83 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 export default function PostArticleContentDetail() {
   const data = useLoaderData<typeof loader>();
 
+  const postArticleRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    let sections: NodeListOf<HTMLHeadingElement>;
+
+    if (
+      !isEmptyOrNotExist(postArticleRef?.current) &&
+      typeof postArticleRef.current['querySelectorAll'] === 'function'
+    ) {
+      sections = postArticleRef.current?.querySelectorAll('article h2[id]');
+
+      window.addEventListener('scroll', navHighlighter);
+    }
+
+    function navHighlighter() {
+      // Get current scroll position
+      const scrollY = window.pageYOffset;
+
+      // Now we loop through sections to get height, top and ID values for each
+      sections.forEach(current => {
+        const sectionHeight = current.offsetHeight;
+        const sectionTop = current.offsetTop - 50;
+        const sectionId = current.getAttribute('id');
+
+        /*
+        - If our current scroll position enters the space where current section on screen is, add .active class to corresponding navigation link, else remove it
+        - To know which link needs an active class, we use sectionId variable we are getting while looping through sections as an selector
+        */
+        if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+          document?.querySelector(`#nav-highlight a[href*=${sectionId}]`)?.classList.add('active');
+        } else {
+          document?.querySelector(`#nav-highlight a[href*=${sectionId}]`)?.classList.remove('active');
+        }
+      });
+    }
+  }, [postArticleRef]);
+
   return (
-    <div className="relative">
-      <div className="relative pt-10 lg:pt-28">
-        <div className="mx-auto mb-5 flex w-full max-w-3xl flex-col px-5 sm:max-w-2xl md:max-w-3xl lg:px-0">
-          {data.post ? (
-            <section className="pb-8">
-              <PostArticleContent
-                {...data.post}
-                author={data.post.user}
-                createdAt={new Date(data.post.createdAt)}
-                updatedAt={new Date(data.post.updatedAt)}
-              />
-            </section>
-          ) : (
-            <p className="dark:text-gray-400">{data.error}</p>
-          )}
+    <>
+      <div className="2xlg:max-w-7xl relative mx-auto w-full px-4 md:max-w-3xl lg:max-w-5xl">
+        <div className="relative pt-10 lg:pt-28 flex">
+          <div ref={postArticleRef} className="mx-auto mb-5 flex w-full max-w-2xl flex-col sm:max-w-2xl md:max-w-3xl">
+            {data.post ? (
+              <section className="pb-8">
+                <PostArticleContent
+                  {...data.post}
+                  author={data.post.user}
+                  createdAt={new Date(data.post.createdAt)}
+                  updatedAt={new Date(data.post.updatedAt)}
+                />
+              </section>
+            ) : (
+              <p className="dark:text-gray-400">{data.error}</p>
+            )}
+          </div>
+          <aside id="nav-highlight" className="fixed left-2 bottom-[30px] flex max-w-[200px] flex-col">
+            <ul>
+              <li>
+                <a className='text-blue-400' href="#react-view-action-state">React View, action và state</a>
+              </li>
+              <li>
+                <a className='text-blue-400' href="#react-state-on-server">Vậy nếu "state" nằm ở phía Server thì sẽ như thế nào</a>
+              </li>
+              <li>
+                <a className='text-blue-400' href="#remix-data-flow">Remix data flow</a>
+              </li>
+              <li>
+                <a className='text-blue-400' href="#remix-in-action">Remix in action</a>
+              </li>
+              <li>
+                <a href="#state-management">Vậy còn state management thì sao</a>
+              </li>
+            </ul>
+          </aside>
+          {/* RELATIVE POSTS SECTION */}
         </div>
-        <section className="relative pt-20">
+        <div className="relative pt-20">
           <div className="rotate-flip-Y absolute -top-1 left-0 w-full overflow-hidden">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
               <path
@@ -111,11 +172,11 @@ export default function PostArticleContentDetail() {
             </svg>
           </div>
 
-          <div className="xlg:w-1/2 mx-auto mb-40 flex w-full flex-col px-5 lg:w-3/4 lg:px-0">
+          <section className="xlg:w-1/2 mx-auto mb-40 flex w-full flex-col px-5 lg:w-3/4 lg:px-0">
             <strong className="relative z-10 my-16 pt-20 text-center text-4xl font-semibold uppercase dark:text-gray-200 ">
               Relative posts
             </strong>
-            <section className="relative mx-auto flex w-full flex-col px-5 pb-5 md:w-4/5 md:px-0 lg:max-w-2xl 2xl:max-w-3xl">
+            <div className="relative mx-auto flex w-full flex-col px-5 pb-5 md:w-4/5 md:px-0 lg:max-w-2xl 2xl:max-w-3xl">
               {data.listPostsRelative.map((post, index) => (
                 <div className="my-5" key={post.id}>
                   <PostArticle
@@ -127,10 +188,65 @@ export default function PostArticleContentDetail() {
                   {index < data.listPostsRelative.length - 1 && <hr className="line-wavy" />}
                 </div>
               ))}
-            </section>
-          </div>
-        </section>
+            </div>
+          </section>
+        </div>
       </div>
-    </div>
+      <script>
+    {window.addEventListener('DOMContentLoaded', ()=>{
+
+        const observer = new IntersectionObserver(entries=>{
+            entries.forEach(entry=>{
+                const id = entry.target.getAttribute('id');
+                console.log(entry.intersectionRatio);
+                if (entry.intersectionRatio > 0) {
+                    console.log(document.querySelector('#nav-highlight li a[href*="' + id + '"]').classList);
+
+                    document.querySelector('#nav-highlight li a[href*="' + id + '"]').classList.add('active');
+                } else {
+                    document.querySelector('#nav-highlight li a[href*="' + id + '"]').classList.remove('active');
+                }
+            }
+            );
+        }
+        );
+
+        document.querySelectorAll('section[id]').forEach((section)=>{
+            observer.observe(section);
+        }
+        );
+
+    }
+    );}
+</script>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+            window.addEventListener('DOMContentLoaded', () => {
+
+              const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                  const id = entry.target.getAttribute('id');
+                  console.log(entry.intersectionRatio);
+                  if (entry.intersectionRatio > 0) {
+                  console.log(document.querySelector('#nav-highlight li a[href*="'+ id +'"]').classList);
+
+                    document.querySelector('#nav-highlight li a[href*="'+ id +'"]').classList.add('active');
+                  } else {
+                    document.querySelector('#nav-highlight li a[href*="'+ id +'"]').classList.remove('active');
+                  }
+                });
+              });
+          
+              document.querySelectorAll('section[id]').forEach((section) => {
+                observer.observe(section);
+              });
+            
+          });
+
+          `
+        }}
+      />
+    </>
   );
 }

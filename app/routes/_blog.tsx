@@ -20,7 +20,7 @@ export async function loader() {
 export default function BlogIndex() {
   return (
     <>
-      <header className="relative z-10 px-4 py-4 text-lg sm:px-3 md:px-0">
+      <header className="relative z-10 px-4 py-4 text-lg">
         <div className="2xlg:max-w-7xl mx-auto flex w-full items-center justify-between md:max-w-3xl lg:max-w-5xl ">
           <Link to={ROUTERS.ROOT} title="Home">
             <img alt="Blog Logo" src="/assets/images/logo.webp" width="75" height="50" />
