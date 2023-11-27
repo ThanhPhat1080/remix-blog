@@ -46,7 +46,6 @@ export default function App() {
 
   // If at least one route wants to hydrate, this will return true
   const includeScripts = matches.some(match => match.handle?.hydrate);
-console.log('includeScripts',includeScripts);
 
   return (
     <html lang="en">

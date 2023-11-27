@@ -8,13 +8,11 @@ import { PostArticleContent, links as PostArticleContentLinks } from '~/componen
 import { PostArticle } from '~/components';
 
 import type { LinksFunction, LoaderFunctionArgs } from '@remix-run/node';
-import { capitalizeFirstLetter, convertUrlSlug, isEmptyOrNotExist } from '~/utils';
-import { useEffect, useRef } from 'react';
+import { capitalizeFirstLetter, convertUrlSlug } from '~/utils';
 
 export const links: LinksFunction = () => {
   return [...PostArticleContentLinks()];
 };
-export const handle = { hydrate: true };
 
 export const meta = ({ data, location }) => {
   if (!data) {
@@ -87,50 +85,13 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 export default function PostArticleContentDetail() {
   const data = useLoaderData<typeof loader>();
 
-  const postArticleRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    let sections: NodeListOf<HTMLHeadingElement>;
-
-    if (
-      !isEmptyOrNotExist(postArticleRef?.current) &&
-      typeof postArticleRef.current['querySelectorAll'] === 'function'
-    ) {
-      sections = postArticleRef.current?.querySelectorAll('article h2[id]');
-
-      window.addEventListener('scroll', navHighlighter);
-    }
-
-    function navHighlighter() {
-      // Get current scroll position
-      const scrollY = window.pageYOffset;
-
-      // Now we loop through sections to get height, top and ID values for each
-      sections.forEach(current => {
-        const sectionHeight = current.offsetHeight;
-        const sectionTop = current.offsetTop - 50;
-        const sectionId = current.getAttribute('id');
-
-        /*
-        - If our current scroll position enters the space where current section on screen is, add .active class to corresponding navigation link, else remove it
-        - To know which link needs an active class, we use sectionId variable we are getting while looping through sections as an selector
-        */
-        if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
-          document?.querySelector(`#nav-highlight a[href*=${sectionId}]`)?.classList.add('active');
-        } else {
-          document?.querySelector(`#nav-highlight a[href*=${sectionId}]`)?.classList.remove('active');
-        }
-      });
-    }
-  }, [postArticleRef]);
-
   return (
     <>
-      <div className="2xlg:max-w-7xl relative mx-auto w-full px-4 md:max-w-3xl lg:max-w-5xl">
-        <div className="relative pt-10 lg:pt-28 flex">
-          <div ref={postArticleRef} className="mx-auto mb-5 flex w-full max-w-2xl flex-col sm:max-w-2xl md:max-w-3xl">
+      <div className="2xlg:max-w-7xl mx-auto w-full px-4 md:max-w-3xl lg:max-w-6xl">
+        <div className="flex pt-10 lg:pt-28">
+          <div className="relative mx-auto mb-5 flex w-full max-w-2xl sm:max-w-2xl md:max-w-5xl">
             {data.post ? (
-              <section className="pb-8">
+              <section className="w-full pb-8">
                 <PostArticleContent
                   {...data.post}
                   author={data.post.user}
@@ -142,27 +103,37 @@ export default function PostArticleContentDetail() {
               <p className="dark:text-gray-400">{data.error}</p>
             )}
           </div>
-          <aside id="nav-highlight" className="fixed left-2 bottom-[30px] flex max-w-[200px] flex-col">
+          <aside id="nav-highlight" className="hidden lg:block sticky top-[200px] max-w-[350px] self-start pl-5 opacity-0">
             <ul>
               <li>
-                <a className='text-blue-400' href="#react-view-action-state">React View, action và state</a>
+                <a
+                  className="block border-l-2 border-slate-500 px-3 py-2 text-gray-500"
+                  href="#react-view-action-and-state">
+                  React View, action và state
+                </a>
               </li>
               <li>
-                <a className='text-blue-400' href="#react-state-on-server">Vậy nếu "state" nằm ở phía Server thì sẽ như thế nào</a>
+                <a className="block border-l-2 border-slate-500 px-3 py-2 text-gray-500" href="#react-state-on-server">
+                  Vậy nếu "state" nằm ở phía Server thì sẽ như thế nào
+                </a>
               </li>
               <li>
-                <a className='text-blue-400' href="#remix-data-flow">Remix data flow</a>
+                <a className="block border-l-2 border-slate-500 px-3 py-2 text-gray-500" href="#remix-data-flow">
+                  Remix data flow
+                </a>
               </li>
               <li>
-                <a className='text-blue-400' href="#remix-in-action">Remix in action</a>
+                <a className="block border-l-2 border-slate-500 px-3 py-2 text-gray-500" href="#remix-in-action">
+                  Remix in action
+                </a>
               </li>
               <li>
-                <a href="#state-management">Vậy còn state management thì sao</a>
+                <a className="block border-l-2 border-slate-500 px-3 py-2 text-gray-500" href="#state-management">Vậy còn state management thì sao</a>
               </li>
             </ul>
           </aside>
-          {/* RELATIVE POSTS SECTION */}
         </div>
+        {/* RELATIVE POSTS SECTION */}
         <div className="relative pt-20">
           <div className="rotate-flip-Y absolute -top-1 left-0 w-full overflow-hidden">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
@@ -192,59 +163,40 @@ export default function PostArticleContentDetail() {
           </section>
         </div>
       </div>
-      <script>
-    {window.addEventListener('DOMContentLoaded', ()=>{
 
-        const observer = new IntersectionObserver(entries=>{
-            entries.forEach(entry=>{
-                const id = entry.target.getAttribute('id');
-                console.log(entry.intersectionRatio);
-                if (entry.intersectionRatio > 0) {
-                    console.log(document.querySelector('#nav-highlight li a[href*="' + id + '"]').classList);
-
-                    document.querySelector('#nav-highlight li a[href*="' + id + '"]').classList.add('active');
-                } else {
-                    document.querySelector('#nav-highlight li a[href*="' + id + '"]').classList.remove('active');
-                }
-            }
-            );
-        }
-        );
-
-        document.querySelectorAll('section[id]').forEach((section)=>{
-            observer.observe(section);
-        }
-        );
-
-    }
-    );}
-</script>
       <script
         dangerouslySetInnerHTML={{
           __html: `
             window.addEventListener('DOMContentLoaded', () => {
-
               const observer = new IntersectionObserver(entries => {
                 entries.forEach(entry => {
                   const id = entry.target.getAttribute('id');
-                  console.log(entry.intersectionRatio);
                   if (entry.intersectionRatio > 0) {
-                  console.log(document.querySelector('#nav-highlight li a[href*="'+ id +'"]').classList);
-
                     document.querySelector('#nav-highlight li a[href*="'+ id +'"]').classList.add('active');
                   } else {
                     document.querySelector('#nav-highlight li a[href*="'+ id +'"]').classList.remove('active');
                   }
                 });
               });
-          
-              document.querySelectorAll('section[id]').forEach((section) => {
-                observer.observe(section);
-              });
-            
-          });
 
-          `
+              const observerNavLinkAside = new IntersectionObserver(entry => {
+                const entryTarget = entry[0];
+                if (entryTarget.intersectionRatio > 0.1) {
+                  document.querySelector('#nav-highlight').classList.add('active');
+                } else {
+                  document.querySelector('#nav-highlight').classList.remove('active');
+                }
+              }, {
+                threshold: 0.1
+              });
+
+              document.querySelectorAll('section[id]').forEach((item) => {
+                observer.observe(item);
+              });
+
+              observerNavLinkAside.observe(document.querySelector('#markdown-body-article'));
+          });
+          `,
         }}
       />
     </>

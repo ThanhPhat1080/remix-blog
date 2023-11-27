@@ -33,11 +33,14 @@ dependencies:
     specifier: ^3.6.1
     version: 3.6.1
   marked:
-    specifier: ^1.2.5
-    version: 1.2.5
+    specifier: ^10.0.0
+    version: 10.0.0
   marked-custom-heading-id:
     specifier: ^2.0.5
-    version: 2.0.5(marked@1.2.5)
+    version: 2.0.5(marked@10.0.0)
+  marked-highlight:
+    specifier: ^2.0.7
+    version: 2.0.7(marked@10.0.0)
   marked-sanitizer-github:
     specifier: ^1.0.1
     version: 1.0.1
@@ -2050,7 +2053,7 @@ packages:
     resolution: {integrity: sha512-jmjpa4BwUsmhxcfsgUit/7A9KbrC48Q0q8KvnY107ogcjGgTFDlIL3RpihNpx2Mu1hM4mdFQjoVc4O6JoGKHsA==}
     deprecated: This is a stub types definition. marked provides its own type definitions, so you do not need this installed.
     dependencies:
-      marked: 1.2.5
+      marked: 10.0.0
     dev: true
 
   /@types/mdast@3.0.11:
@@ -6068,12 +6071,20 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /marked-custom-heading-id@2.0.5(marked@1.2.5):
+  /marked-custom-heading-id@2.0.5(marked@10.0.0):
     resolution: {integrity: sha512-dRwuqTL0Z44oUFrkp33N7futLmHV1I5MGJ1iCmoAWwcegaGQygmfJE2mf3mJtj4ECoDexY0S2vWmvyXMc2mX6Q==}
     peerDependencies:
       marked: '>=1 <11'
     dependencies:
-      marked: 1.2.5
+      marked: 10.0.0
+    dev: false
+
+  /marked-highlight@2.0.7(marked@10.0.0):
+    resolution: {integrity: sha512-3IjgV879kEihgjWwVv8HGDkyuKDyR8hssDEjMUAH5LNVhIcZge+u6UKhxPA+daEVMVZeKEHo5gWrLVlLPF1m3g==}
+    peerDependencies:
+      marked: '>=4 <11'
+    dependencies:
+      marked: 10.0.0
     dev: false
 
   /marked-sanitizer-github@1.0.1:
@@ -6084,9 +6095,9 @@ packages:
       htmlparser2: 4.1.0
     dev: false
 
-  /marked@1.2.5:
-    resolution: {integrity: sha512-2AlqgYnVPOc9WDyWu7S5DJaEZsfk6dNh/neatQ3IHUW4QLutM/VPSH9lG7bif+XjFWc9K9XR3QvR+fXuECmfdA==}
-    engines: {node: '>= 8.16.2'}
+  /marked@10.0.0:
+    resolution: {integrity: sha512-YiGcYcWj50YrwBgNzFoYhQ1hT6GmQbFG8SksnYJX1z4BXTHSOrz1GB5/Jm2yQvMg4nN1FHP4M6r03R10KrVUiA==}
+    engines: {node: '>= 18'}
     hasBin: true
 
   /md5-hex@3.0.1:

@@ -38,6 +38,8 @@ code.hljs {
 .hljs-quote {
   color: #5c6370;
   font-style: italic;
+  display: inline-block;
+  text-wrap: balance;
 }
 .hljs-doctag,
 .hljs-formula,

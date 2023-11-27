@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body {
-    scroll-behavior:smooth;
+html,
+body {
+    scroll-behavior: smooth;
+}
+
+#nav-highlight li a.active {
+    color: #58a6ff;
+    font-weight: bold;
+    background-color: #2e3c52;
+    border-color: #58a6ff;
+}
+
+#nav-highlight.active {
+    opacity: 1;
+    transition: all 0.3s;
 }
