@@ -107,28 +107,28 @@ export default function PostArticleContentDetail() {
             <ul>
               <li>
                 <a
-                  className="block border-l-2 border-slate-500 px-3 py-2 text-gray-500"
+                  className="block border-l-2 border-slate-500 px-3 py-3 text-gray-500"
                   href="#react-view-action-and-state">
                   React View, action và state
                 </a>
               </li>
               <li>
-                <a className="block border-l-2 border-slate-500 px-3 py-2 text-gray-500" href="#react-state-on-server">
+                <a className="block border-l-2 border-slate-500 px-3 py-3 text-gray-500" href="#react-state-on-server">
                   Vậy nếu "state" nằm ở phía Server thì sẽ như thế nào
                 </a>
               </li>
               <li>
-                <a className="block border-l-2 border-slate-500 px-3 py-2 text-gray-500" href="#remix-data-flow">
+                <a className="block border-l-2 border-slate-500 px-3 py-3 text-gray-500" href="#remix-data-flow">
                   Remix data flow
                 </a>
               </li>
               <li>
-                <a className="block border-l-2 border-slate-500 px-3 py-2 text-gray-500" href="#remix-in-action">
+                <a className="block border-l-2 border-slate-500 px-3 py-3 text-gray-500" href="#remix-in-action">
                   Remix in action
                 </a>
               </li>
               <li>
-                <a className="block border-l-2 border-slate-500 px-3 py-2 text-gray-500" href="#state-management">Vậy còn state management thì sao</a>
+                <a className="block border-l-2 border-slate-500 px-3 py-3 text-gray-500" href="#state-management">Vậy còn state management thì sao</a>
               </li>
             </ul>
           </aside>
@@ -181,13 +181,13 @@ export default function PostArticleContentDetail() {
 
               const observerNavLinkAside = new IntersectionObserver(entry => {
                 const entryTarget = entry[0];
-                if (entryTarget.intersectionRatio > 0.1) {
+                if (entryTarget.intersectionRatio > 0.05) {
                   document.querySelector('#nav-highlight').classList.add('active');
                 } else {
                   document.querySelector('#nav-highlight').classList.remove('active');
                 }
               }, {
-                threshold: 0.1
+                threshold: 0.05
               });
 
               document.querySelectorAll('section[id]').forEach((item) => {

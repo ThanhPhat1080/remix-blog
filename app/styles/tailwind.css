@@ -12,6 +12,7 @@ body {
     font-weight: bold;
     background-color: #2e3c52;
     border-color: #58a6ff;
+    transition: all 0.3s;
 }
 
 #nav-highlight.active {
