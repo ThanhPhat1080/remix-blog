@@ -8,13 +8,19 @@ export const links: LinksFunction = () => {
 };
 
 export const PostArticleContent = (props: Partial<Post>) => {
-  const { title, preface, coverImage, body, updatedAt = '' } = props;
+  const {
+    title,
+    preface,
+    coverImage,
+    body,
+    // updatedAt = ''
+  } = props;
 
   // const updateAtString = new Date(updatedAt).toJSON().slice(0, 10).replace(/-/g, '/');
 
   return (
     <article aria-details={title} aria-label={title} className="w-full">
-        <h1 className="my-8 text-stale-800 text-4xl font-bold lg:text-6xl">{title}</h1>
+      <h1 className="text-stale-800 my-8 text-4xl font-bold lg:text-6xl">{title}</h1>
 
       <div className="mt-4 h-64 overflow-hidden rounded-xl shadow-lg md:h-80 lg:h-96">
         <CloudinaryImageLoader
@@ -42,7 +48,12 @@ export const PostArticleContent = (props: Partial<Post>) => {
       <hr className="line-wavy" />
 
       <div className="py-6">
-        <TextWithMarkdown id='markdown-body-article' customClasses='markdown-body w-full' text={body} style={{ background: 'inherit', fontSize: '1em' }} />
+        <TextWithMarkdown
+          id="markdown-body-article"
+          customClasses="markdown-body w-full"
+          text={body}
+          style={{ background: 'inherit', fontSize: '1em' }}
+        />
       </div>
     </article>
   );

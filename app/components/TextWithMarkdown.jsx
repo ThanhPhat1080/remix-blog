@@ -91,7 +91,7 @@ const sectionExtension = {
 
 marked.use(customHeadingId(), sectionExtension);
 
-export default function TextWithMarkdown({ text = '', customClasses = '', style = {} , id = ''}) {
+export default function TextWithMarkdown({ text = '', customClasses = '', style = {}, id = '' }) {
   return (
     <div
       className={customClasses}

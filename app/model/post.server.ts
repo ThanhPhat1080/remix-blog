@@ -59,7 +59,7 @@ export function createPost({
   isPublish = false,
   userId,
   coverImage,
-  toc
+  toc,
 }: Pick<Post, 'body' | 'title' | 'preface' | 'isPublish' | 'slug' | 'coverImage' | 'toc'> & {
   userId: User['id'];
 }) {
@@ -89,7 +89,7 @@ export function updatePost({
   slug,
   isPublish = false,
   coverImage = null,
-  toc
+  toc,
 }: Pick<Post, 'id' | 'title' | 'preface' | 'body' | 'slug' | 'isPublish' | 'coverImage' | 'toc'>) {
   return prisma.post.update({
     where: {
@@ -102,7 +102,7 @@ export function updatePost({
       isPublish,
       slug,
       coverImage,
-      toc
+      toc,
     }),
   });
 }

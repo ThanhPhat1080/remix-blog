@@ -39,7 +39,7 @@ export function useMatchesData(id: string): Record<string, unknown> | undefined 
   return route?.data;
 }
 
-function isUser(user: any): user is User {
+function isUser(user: unknown): user is User {
   return user !== null && typeof user === 'object' && isEmptyOrNotExist(user.email) && typeof user.email === 'string';
 }
 
@@ -90,12 +90,13 @@ export function isEmptyOrNotExist(param: unknown): param is null | undefined | s
   return Object.keys(param).length === 0;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function getPathImgCloudinary(uploadResolved: any): string {
   if (isEmptyOrNotExist(uploadResolved)) {
     return '';
   }
 
-  return `v${uploadResolved.version.toString()}/${uploadResolved.public_id.toString()}.${uploadResolved.format.toString()}`;
+  return `v${uploadResolved?.version?.toString()}/${uploadResolved?.public_id?.toString()}.${uploadResolved?.format?.toString()}`;
 }
 
 export function removeEmptyObjectProperties(object: object): object {

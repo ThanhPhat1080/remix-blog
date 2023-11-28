@@ -56,7 +56,7 @@ export async function action({ request }: ActionFunctionArgs) {
     slug: null,
     coverImage: null,
     serverError: null,
-    toc: null
+    toc: null,
   };
 
   const userId = await requireUserId(request);
@@ -129,7 +129,7 @@ export async function action({ request }: ActionFunctionArgs) {
       isPublish,
       userId,
       slug: convertUrlSlug(title, '-', convert_Vi_To_Eng),
-      toc
+      toc,
     });
 
     return redirect(`${ROUTERS.DASHBOARD}/posts/${newPost.slug}`);
@@ -146,7 +146,7 @@ export async function action({ request }: ActionFunctionArgs) {
         coverImage,
         isPublish,
         slug: convertUrlSlug(title, '-', convert_Vi_To_Eng),
-        toc
+        toc,
       });
 
       return redirect(`${ROUTERS.DASHBOARD}/posts/${updatedPost.slug}`);

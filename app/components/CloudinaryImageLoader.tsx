@@ -25,6 +25,7 @@ const positionMap: Record<ImagePosition, string> = {
   top: 'north',
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const cloudinaryLoader: ClientLoader = (src: string, loaderUrl: string, loaderOptions: any) => {
   const params = [];
 
