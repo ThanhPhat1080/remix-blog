@@ -59,7 +59,8 @@ export function createPost({
   isPublish = false,
   userId,
   coverImage,
-}: Pick<Post, 'body' | 'title' | 'preface' | 'isPublish' | 'slug' | 'coverImage'> & {
+  toc
+}: Pick<Post, 'body' | 'title' | 'preface' | 'isPublish' | 'slug' | 'coverImage' | 'toc'> & {
   userId: User['id'];
 }) {
   return prisma.post.create({
@@ -70,6 +71,7 @@ export function createPost({
       isPublish,
       slug,
       coverImage,
+      toc,
       user: {
         connect: {
           id: userId,
@@ -87,7 +89,8 @@ export function updatePost({
   slug,
   isPublish = false,
   coverImage = null,
-}: Pick<Post, 'id' | 'title' | 'preface' | 'body' | 'slug' | 'isPublish' | 'coverImage'>) {
+  toc
+}: Pick<Post, 'id' | 'title' | 'preface' | 'body' | 'slug' | 'isPublish' | 'coverImage' | 'toc'>) {
   return prisma.post.update({
     where: {
       id,
@@ -99,6 +102,7 @@ export function updatePost({
       isPublish,
       slug,
       coverImage,
+      toc
     }),
   });
 }

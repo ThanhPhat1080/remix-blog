@@ -5,7 +5,7 @@ import invariant from 'tiny-invariant';
 import { getPostBySlug, getPublishPosts } from '~/model/post.server';
 import type { Post } from 'prisma/prisma-client';
 import { PostArticleContent, links as PostArticleContentLinks } from '~/components/PostArticleContent';
-import { PostArticle } from '~/components';
+import { PostArticle, TextWithMarkdown } from '~/components';
 
 import type { LinksFunction, LoaderFunctionArgs } from '@remix-run/node';
 import { capitalizeFirstLetter, convertUrlSlug } from '~/utils';
@@ -94,7 +94,6 @@ export default function PostArticleContentDetail() {
               <section className="w-full pb-8">
                 <PostArticleContent
                   {...data.post}
-                  author={data.post.user}
                   createdAt={new Date(data.post.createdAt)}
                   updatedAt={new Date(data.post.updatedAt)}
                 />
@@ -103,35 +102,13 @@ export default function PostArticleContentDetail() {
               <p className="dark:text-gray-400">{data.error}</p>
             )}
           </div>
-          <aside id="nav-highlight" className="hidden lg:block sticky top-[200px] max-w-[350px] self-start pl-5 opacity-0">
-            <ul>
-              <li>
-                <a
-                  className="block border-l-2 border-slate-500 px-3 py-3 text-gray-500"
-                  href="#react-view-action-and-state">
-                  React View, action và state
-                </a>
-              </li>
-              <li>
-                <a className="block border-l-2 border-slate-500 px-3 py-3 text-gray-500" href="#react-state-on-server">
-                  Vậy nếu "state" nằm ở phía Server thì sẽ như thế nào
-                </a>
-              </li>
-              <li>
-                <a className="block border-l-2 border-slate-500 px-3 py-3 text-gray-500" href="#remix-data-flow">
-                  Remix data flow
-                </a>
-              </li>
-              <li>
-                <a className="block border-l-2 border-slate-500 px-3 py-3 text-gray-500" href="#remix-in-action">
-                  Remix in action
-                </a>
-              </li>
-              <li>
-                <a className="block border-l-2 border-slate-500 px-3 py-3 text-gray-500" href="#state-management">Vậy còn state management thì sao</a>
-              </li>
-            </ul>
-          </aside>
+          {data.post && (
+            <aside
+              id="nav-highlight"
+              className="sticky top-[200px] hidden max-w-[350px] self-start pl-5 opacity-0 lg:block">
+              <TextWithMarkdown text={data.post.toc} style={{ background: 'inherit', fontSize: '1em' }} />
+            </aside>
+          )}
         </div>
         {/* RELATIVE POSTS SECTION */}
         <div className="relative pt-20">

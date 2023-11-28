@@ -91,12 +91,12 @@ const sectionExtension = {
 
 marked.use(customHeadingId(), sectionExtension);
 
-export default function TextWithMarkdown({ text = '', customClasses = '', style = {} }) {
+export default function TextWithMarkdown({ text = '', customClasses = '', style = {} , id = ''}) {
   return (
     <div
-      className={`markdown-body w-full ${customClasses}`}
+      className={customClasses}
       style={style}
-      id='markdown-body-article'
+      id={id}
       dangerouslySetInnerHTML={{
         __html: marked.parse(text),
       }}

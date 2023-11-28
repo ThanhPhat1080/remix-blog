@@ -56,6 +56,7 @@ export async function action({ request }: ActionFunctionArgs) {
     slug: null,
     coverImage: null,
     serverError: null,
+    toc: null
   };
 
   const userId = await requireUserId(request);
@@ -69,6 +70,7 @@ export async function action({ request }: ActionFunctionArgs) {
   const coverImage = formData.get('coverImage') as string;
   const isPublish = !isEmptyOrNotExist(formData.get('isPublish'));
   const postId = formData.get('id') || null;
+  const toc = formData.get('toc') || null;
 
   if (isEmptyOrNotExist(title)) {
     return json({ errors: { ...defaultErrorObj, title: 'Title is required' } }, { status: 400 });
@@ -80,6 +82,10 @@ export async function action({ request }: ActionFunctionArgs) {
 
   if (isEmptyOrNotExist(body)) {
     return json({ errors: { ...defaultErrorObj, body: 'Body is required' } }, { status: 400 });
+  }
+
+  if (isEmptyOrNotExist(toc)) {
+    return json({ errors: { ...defaultErrorObj, toc: 'Table of content is required' } }, { status: 400 });
   }
 
   // Get the post by slug
@@ -123,6 +129,7 @@ export async function action({ request }: ActionFunctionArgs) {
       isPublish,
       userId,
       slug: convertUrlSlug(title, '-', convert_Vi_To_Eng),
+      toc
     });
 
     return redirect(`${ROUTERS.DASHBOARD}/posts/${newPost.slug}`);
@@ -139,6 +146,7 @@ export async function action({ request }: ActionFunctionArgs) {
         coverImage,
         isPublish,
         slug: convertUrlSlug(title, '-', convert_Vi_To_Eng),
+        toc
       });
 
       return redirect(`${ROUTERS.DASHBOARD}/posts/${updatedPost.slug}`);
@@ -168,10 +176,12 @@ export default function PostEditorForm() {
   const postSlug = isEdit ? post.slug : '';
   const postCoverImage = isEdit ? ROUTERS.LOADER_CLOUDINARY_IMAGE + post.coverImage : '';
   const postIsPublish = isEdit ? post.isPublish : false;
+  const postToc = isEdit ? post.toc : '';
 
   const [postPreview, setNotePreview] = React.useState({
     title: postTitle,
     preface: postPreface,
+    toc: postToc,
     body: postBody,
     slug: postSlug,
   });
@@ -182,11 +192,13 @@ export default function PostEditorForm() {
   const prefaceRef = React.useRef<HTMLInputElement>(null);
   const bodyRef = React.useRef<HTMLTextAreaElement>(null);
   const slugRef = React.useRef<HTMLInputElement>(null);
+  const tocRef = React.useRef<HTMLInputElement>(null);
 
   const isTitleError = !isEmptyOrNotExist(actionData?.errors?.title);
   const isPrefaceError = !isEmptyOrNotExist(actionData?.errors?.preface);
   const isBodyError = !isEmptyOrNotExist(actionData?.errors?.body);
   const isSlugError = !isEmptyOrNotExist(actionData?.errors?.slug);
+  const isTocError = !isEmptyOrNotExist(actionData?.errors?.toc);
   const isUploadCoverImageError = !isEmptyOrNotExist(actionData?.errors?.coverImage);
 
   React.useEffect(() => {
@@ -201,6 +213,9 @@ export default function PostEditorForm() {
     }
     if (isSlugError) {
       slugRef.current?.focus();
+    }
+    if (isTocError) {
+      tocRef.current?.focus();
     }
   });
 
@@ -348,7 +363,32 @@ export default function PostEditorForm() {
                   defaultValue={postPreface}
                 />
                 {isPrefaceError && (
-                  <div className="pt-1 text-red-700" id="title-error">
+                  <div className="pt-1 text-red-700" id="preface-error">
+                    {actionData?.errors.preface}
+                  </div>
+                )}
+              </label>
+
+              {/* ---Table of Content--- */}
+              <label className="flex w-full flex-col gap-1 text-sm">
+                Table of Content
+                <textarea
+                  rows={10}
+                  name="toc"
+                  className="w-full rounded border bg-white px-2 py-1 text-slate-600 dark:border-gray-200 dark:bg-slate-800 dark:text-white"
+                  aria-invalid={isTocError ? true : undefined}
+                  aria-errormessage={isTocError ? 'toc-error' : undefined}
+                  onChange={e =>
+                    setNotePreview(prev => ({
+                      ...prev,
+                      toc: e.target.value,
+                    }))
+                  }
+                  required
+                  defaultValue={postToc}
+                />
+                {isTocError && (
+                  <div className="pt-1 text-red-700" id="toc-error">
                     {actionData?.errors.preface}
                   </div>
                 )}

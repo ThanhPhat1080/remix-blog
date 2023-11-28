@@ -34,6 +34,7 @@ model Post {
   id            String        @id @default(cuid()) @map("_id")
   title         String
   preface       String
+  toc           String
   body          String
   isPublish     Boolean
   slug          String        @unique

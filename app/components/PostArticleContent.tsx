@@ -42,7 +42,7 @@ export const PostArticleContent = (props: Partial<Post>) => {
       <hr className="line-wavy" />
 
       <div className="py-6">
-        <TextWithMarkdown text={body} style={{ background: 'inherit', fontSize: '1em' }} />
+        <TextWithMarkdown id='markdown-body-article' customClasses='markdown-body w-full' text={body} style={{ background: 'inherit', fontSize: '1em' }} />
       </div>
     </article>
   );
